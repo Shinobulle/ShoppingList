@@ -10,6 +10,10 @@ export const useProductStore = defineStore("ProductStore", {
     actions:{
         fill(){
             this.products = products;
+        },
+        noQuantity (item) {
+            if(item.quantity > 0) return false;
+            return true;
         }
     }
 })
