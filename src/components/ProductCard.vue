@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-3 bg-red-300 hover:bg-red-500 grid grid-cols-1 rounded-lg p-2">
+    <div class="col-span-2 w-3/6 m-auto mb-3 bg-red-300 hover:bg-red-500 grid grid-cols-1 rounded-lg p-2">
         <div class="col-1 ">
             <img class="m-auto" :src="`../images/${ product.image }`">
         </div>
@@ -18,7 +18,7 @@
             </div>
             <div class="grid grid-cols-2 text-center mb-1">
                 <label>Combien à ajouter</label>
-                <input class="w-1/2 m-auto" type="number" min="0" max="{{ product.quantity }}" v-model="nbProduct">
+                <input class="w-1/2 m-auto" type="number" placeholder="0" min="0" max="{{ product.quantity }}" v-model="nbProduct" >
             </div>
             <div class="grid grid-cols-1 mb-2 mt-2">
                 <button class="rounded-lg bg-green-400 hover:bg-green-500 m-auto w-3/4" @click="$emit('add:product', nbProduct), (nbProduct = 0)">Ajouter au panier</button>

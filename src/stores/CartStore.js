@@ -29,7 +29,7 @@ export const useCartStore = defineStore("CartStore", {
     actions: {
         addItems(count, item) {
             count = parseInt(count);
-            if (count < 1) throw new Error ("Vous devez choisir une quantité supérieur à 0 !");
+            if (count < 1 || isNaN(count)) throw new Error ("Vous devez choisir une quantité supérieur à 0 !");
             if (!this.stockStore.enoughQuantity(count, item)) throw new Error("Il n'y a pas assez de stock !");
             for(let index = 0; index < count; index++){
                 this.items.push({ ...item });
