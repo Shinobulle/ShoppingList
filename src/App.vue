@@ -17,28 +17,28 @@ export default {
     }
   },
   // mounted(){
-  //   this.productStore.fill();
+  //   this.stockStore.fill();
   // }
 }
 </script>
 
 <script setup>
-import { useProductStore } from './stores/ProductStore';
+import { useStockStore } from '@/stores/StockStore';
 import { useCartStore } from '@/stores/CartStore';
-const productStore =  useProductStore();
+const stockStore =  useStockStore();
 const cartStore = useCartStore();
-productStore.fill();
+stockStore.load();
 try {
-  cartStore.addItems("1", productStore.products[0]);
+  cartStore.addItems("1", stockStore.products[0]);
   cartStore.count;
   cartStore.grouped;
-  cartStore.addItems("1", productStore.products[0]);
-  console.log(productStore.noQuantity(productStore.products[0]));
-  cartStore.addItems("2", productStore.products[2]);
-  cartStore.addItems("1", productStore.products[3]);
-  cartStore.addItems("3", productStore.products[1]);
+  cartStore.addItems("1", stockStore.products[0]);
+  console.log(stockStore.noQuantity(stockStore.products[0]));
+  cartStore.addItems("2", stockStore.products[2]);
+  cartStore.addItems("1", stockStore.products[3]);
+  cartStore.addItems("3", stockStore.products[1]);
   console.log(cartStore.count);
-  cartStore.clearItem(productStore.products[1].label)
+  cartStore.clearItem(stockStore.products[1].label)
 }catch(e){
   console.log(e.message);
 }

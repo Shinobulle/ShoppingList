@@ -1,23 +1,27 @@
 [
     {
+        "id": 1,
         "label": "Ecran",
         "price": 100,
         "quantity": 2,
         "image": ""
     },
     {
+        "id": 2,
         "label": "Clavier d'ordinateur",
         "price": 58.99,
         "quantity": 5,
         "image": ""
     },
     {
+        "id": 3,
         "label": "Souris d'ordinateur",
         "price": 25.63,
         "quantity": 3,
         "image": ""
     },
     {
+        "id": 4,
         "label": "Ordinateur",
         "price": 319.7,
         "quantity": 1,

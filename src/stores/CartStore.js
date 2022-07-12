@@ -1,10 +1,12 @@
 import { defineStore } from "pinia";
 import { groupBy } from "lodash";
+import { useStockStore } from "./StockStore";
 
 export const useCartStore = defineStore("CartStore", {
     state: () => {
         return {
-            items: []
+            items: [],
+            stockStore: useStockStore()
         }
     },
     getters: {
@@ -22,24 +24,20 @@ export const useCartStore = defineStore("CartStore", {
     },
     actions: {
         addItems(count, item) {
-            count = parseInt(count)
-            if (count < 1) throw new Error ("Vous devez choisir une quantité supérieur à 0 !")
-            if (!this.enoughQuantity(count, item)) throw new Error("Il n'y a pas assez de stock !")
+            count = parseInt(count);
+            if (count < 1) throw new Error ("Vous devez choisir une quantité supérieur à 0 !");
+            if (!this.stockStore.enoughQuantity(count, item)) throw new Error("Il n'y a pas assez de stock !");
             for(let index = 0; index < count; index++){
                 this.items.push({ ...item });
             }
-            this.removeQuantity(count, item);
-            return item.label + "ont été ajouter votre panier !"
+            this.stockStore.removeQuantity(count, item);
+            return item.label + "ont été ajouter votre panier !";
         },
-        clearItem(itemLabel) {
-            this.items = this.items.filter(item => item.label !== itemLabel);
-        },
-        enoughQuantity(count, item) {
-            if(count <= item.quantity) return true
-            return false
-        },
-        removeQuantity(count, item) {
-            item.quantity -= count;
+        clearItem(item) {
+            console.log(this.groupCount(item));
+            const count = this.groupCount(item);
+            this.stockStore.addQuantity(count, item);
+            this.items = this.items.filter(product => product.label !== item.label);
         }
     }
 })
