@@ -15,10 +15,7 @@ export default {
   data() {
     return{
     }
-  },
-  // mounted(){
-  //   this.stockStore.fill();
-  // }
+  }
 }
 </script>
 
@@ -28,6 +25,7 @@ import { useCartStore } from '@/stores/CartStore';
 const stockStore =  useStockStore();
 const cartStore = useCartStore();
 stockStore.load();
+cartStore.load();
 try {
   cartStore.addItems("1", stockStore.products[0]);
   cartStore.count;
@@ -38,7 +36,7 @@ try {
   cartStore.addItems("1", stockStore.products[3]);
   cartStore.addItems("3", stockStore.products[1]);
   console.log(cartStore.count);
-  cartStore.clearItem(stockStore.products[1].label)
+  cartStore.clearItem(stockStore.products[1])
 }catch(e){
   console.log(e.message);
 }

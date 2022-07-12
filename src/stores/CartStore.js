@@ -1,12 +1,16 @@
 import { defineStore } from "pinia";
 import { groupBy } from "lodash";
 import { useStockStore } from "./StockStore";
+import StorageEngine from "@/js/StorageEngine";
+import Product from "@/js/Product";
 
 export const useCartStore = defineStore("CartStore", {
     state: () => {
         return {
             items: [],
-            stockStore: useStockStore()
+            stockStore: useStockStore(),
+            persistenceEngine: new StorageEngine(),
+            persistenceId: "cartItem"
         }
     },
     getters: {
@@ -31,13 +35,27 @@ export const useCartStore = defineStore("CartStore", {
                 this.items.push({ ...item });
             }
             this.stockStore.removeQuantity(count, item);
+            this.save();
             return item.label + "ont été ajouter votre panier !";
         },
         clearItem(item) {
-            console.log(this.groupCount(item));
-            const count = this.groupCount(item);
+            console.log(this.groupCount(item.label));
+            const count = this.groupCount(item.label);
             this.stockStore.addQuantity(count, item);
             this.items = this.items.filter(product => product.label !== item.label);
-        }
+            this.save();
+        },
+        save() {
+            this.persistenceEngine.save(this.persistenceId, this.items);
+        },
+        load() {
+            const rawProducts = this.persistenceEngine.load(this.persistenceId);
+            if (rawProducts == null) return this.items;
+            this.items = [];
+            rawProducts.forEach(rawProduct => {
+                const item = new Product(rawProduct.label, rawProduct.price, rawProduct.quantity, rawProduct.image, rawProduct.id);
+                this.items.push(item);
+            });
+        },
     }
 })

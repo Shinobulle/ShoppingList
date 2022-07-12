@@ -35,7 +35,7 @@ export const useStockStore = defineStore("StockStore", {
             return this.products.sort((a,b) => a.compare(b));
         },
         save() {
-            this.persistenceEngine.save(this.persistenceId, this.collection);
+            this.persistenceEngine.save(this.persistenceId, this.products);
         },
         load() {
             const rawProducts = this.persistenceEngine.load(this.persistenceId);
@@ -52,10 +52,12 @@ export const useStockStore = defineStore("StockStore", {
         removeQuantity(count, item) {
             const newQuantity = item.getQuantity() - count;
             item.setQuantity(newQuantity);
+            this.save();
         },
         addQuantity(count, item){
             const newQuantity = item.getQuantity() + count;
             item.setQuantity(newQuantity);
+            this.save();
         }
     }
 })
