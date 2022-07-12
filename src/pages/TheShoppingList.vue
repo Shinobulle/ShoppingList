@@ -1,5 +1,15 @@
 <template>
-    <h1>test</h1>
+    <div>
+        <button v-for="link in links" :key="link.id">
+            <a :href="`${ link.direction }`"> {{ link.label}}</a>
+        </button>
+    </div>
+    <h1>Produits:</h1>
+    <div class="grid grid-cols-4">
+        <div class="col-span-2 w-3/6 m-auto" v-for="product in stockStore.products.sort()" :key="product.id">
+            <product-card :product="product" @add:product="addProduct($event, product)" />
+        </div>
+    </div>
 </template>
 
 <script setup>
@@ -9,19 +19,33 @@ const stockStore =  useStockStore();
 const cartStore = useCartStore();
 stockStore.load();
 cartStore.load();
-try {
-  cartStore.addItems("1", stockStore.products[0]);
-  cartStore.count;
-  cartStore.grouped;
-  cartStore.addItems("1", stockStore.products[0]);
-  console.log(stockStore.noQuantity(stockStore.products[0]));
-  cartStore.addItems("2", stockStore.products[2]);
-  cartStore.addItems("1", stockStore.products[3]);
-  cartStore.addItems("3", stockStore.products[1]);
-  console.log(cartStore.count);
-  cartStore.clearItem(stockStore.products[1])
-}catch(e){
-  console.log(e.message);
-}
+</script>
 
+<script>
+import ProductCard from '@/components/ProductCard.vue';
+import Links from '@/data/links.json'
+
+export default {
+    name: 'TheShoppingList',
+    components:{
+        ProductCard
+    },
+    data() {
+        return {
+            error: '',
+            links: Links
+        }
+    },
+    methods: {
+        addProduct(count, product) {
+            try{
+                this.cartStore.addItems(count, product);
+                this.error = '';
+            }catch(e){
+                this.error = e.message;
+                alert(this.error);
+            }
+        }
+    }
+}
 </script>

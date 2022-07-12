@@ -1,0 +1,22 @@
+[
+    {
+        "id": 0,
+        "label": "Accueil",
+        "direction": "#"
+    },
+    {
+        "id": 1,
+        "label": "Catalogue",
+        "direction": "#"
+    },
+    {
+        "id": 2,
+        "label": "Recherche",
+        "direction": "#"
+    },
+    {
+        "id": 3,
+        "label": "A propos",
+        "direction": "#"
+    }
+]
