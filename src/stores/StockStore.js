@@ -18,10 +18,6 @@ export const useStockStore = defineStore("StockStore", {
                 this.create(rawProduct.label, rawProduct.price, rawProduct.quantity, rawProduct.image, rawProduct.id);
             })
         },
-        noQuantity(item) {
-            if(item.getQuantity() > 0) return false;
-            return true;
-        },
         create(label, price, quantity, image = "default.png", id = null) {
             const product = new Product(label, price, quantity, image, id);
             this.add(product);
@@ -50,14 +46,19 @@ export const useStockStore = defineStore("StockStore", {
             return false
         },
         removeQuantity(count, item) {
-            const newQuantity = item.getQuantity() - count;
-            item.setQuantity(newQuantity);
+            const index = this.findIndexByProduct(item);
+            const newQuantity = this.products[index].quantity - count;
+            this.products[index].setQuantity(newQuantity);
             this.save();
         },
         addQuantity(count, item){
-            const newQuantity = item.getQuantity() + count;
-            item.setQuantity(newQuantity);
+            const index = this.findIndexByProduct(item);
+            const newQuantity = this.products[index].quantity + count;
+            this.products[index].setQuantity(newQuantity);
             this.save();
-        }
+        },
+        findIndexByProduct(item){
+            return this.products.findIndex(product => product.label == item.label)
+        },
     }
 })

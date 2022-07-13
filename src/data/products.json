@@ -26,5 +26,12 @@
         "price": 319.7,
         "quantity": 1,
         "image": "logo.png"
+    },
+    {
+        "id": 5,
+        "label": "Tapis de souris",
+        "price": 10,
+        "quantity": 25,
+        "image": "logo.png"
     }
 ]

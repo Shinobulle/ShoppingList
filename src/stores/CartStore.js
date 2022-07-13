@@ -32,17 +32,16 @@ export const useCartStore = defineStore("CartStore", {
             if (count < 1 || isNaN(count)) throw new Error ("Vous devez choisir une quantité supérieur à 0 !");
             if (!this.stockStore.enoughQuantity(count, item)) throw new Error("Il n'y a pas assez de stock !");
             for(let index = 0; index < count; index++){
-                this.items.push({ ...item });
+                this.items.push({ ... item });
             }
             this.stockStore.removeQuantity(count, item);
             this.save();
-            return item.label + "ont été ajouter votre panier !";
+            return "Vous avez ajouter : "+item.label + " à votre panier.";
         },
         clearItem(item) {
-            console.log(this.groupCount(item.label));
             const count = this.groupCount(item.label);
             this.stockStore.addQuantity(count, item);
-            this.items = this.items.filter(product => product.label !== item.label);
+            this.items = this.filter(item);
             this.save();
         },
         save() {
@@ -57,5 +56,8 @@ export const useCartStore = defineStore("CartStore", {
                 this.items.push(item);
             });
         },
+        filter(item) {
+            return this.items.filter(product => product.label !== item.label);
+        }
     }
 })
