@@ -100,4 +100,41 @@
         @apply shadow-inner;
         @apply text-center
     }
+    .cartItemInfo {
+        @apply flex;
+        @apply justify-between;
+        @apply text-base;
+        @apply font-medium;
+        @apply text-gray-900;
+    }
+    .btnCheckout {
+        @apply flex;
+        @apply items-center;
+        @apply justify-center;
+        @apply rounded-md;
+        @apply border;
+        @apply border-transparent;
+        @apply bg-indigo-600;
+        @apply px-6;
+        @apply py-3;
+        @apply text-base;
+        @apply font-medium;
+        @apply text-white;
+        @apply shadow-sm;
+        @apply hover:bg-indigo-700;
+    }
+    .btnContinueShopping {
+        @apply font-medium;
+        @apply text-indigo-600;
+        @apply hover:text-indigo-500;
+    }
+    .cartItemImage {
+        @apply h-20;
+        @apply w-20;
+        @apply flex-shrink-0;
+        @apply overflow-hidden;
+        @apply rounded-md;
+        @apply border;
+        @apply border-gray-200;
+    }
 }

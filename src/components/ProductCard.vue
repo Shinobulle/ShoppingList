@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <div class="col-span-1">
-            <img class="m-auto" :src="`../images/${ product.image }`">
+            <img class="w-3/5 m-auto" :src="`../images/${ product.image }`">
         </div>
         <div class="col-span-1">
             <div class="cardCategory">
