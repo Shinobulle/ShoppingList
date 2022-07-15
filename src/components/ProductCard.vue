@@ -35,6 +35,7 @@ export default {
   props: {
     product: Product
   },
+  emits: ['click', 'add:product'],
   data(){
     return {
         nbProduct: Number

@@ -30,6 +30,7 @@ export default {
     props: {
         product: Product,
         quantity: Number
-    }
+    },
+    emits: ['click', 'remove:product']
 }
 </script>
