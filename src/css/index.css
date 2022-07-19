@@ -69,7 +69,7 @@
         @apply grid;
         @apply rounded-full;
         @apply bg-white;
-        @apply hover:bg-indigo-100;
+        @apply hover:bg-gray-100;
         @apply h-10;
         @apply w-10;
         @apply place-content-center;
@@ -89,19 +89,19 @@
         @apply rounded-md;
         @apply border;
         @apply border-transparent;
-        @apply bg-indigo-600;
+        @apply bg-blue-600;
         @apply px-6;
         @apply py-3;
         @apply text-base;
         @apply font-medium;
         @apply text-white;
         @apply shadow-sm;
-        @apply hover:bg-indigo-700;
+        @apply hover:bg-blue-700;
     }
     .btnContinueShopping {
         @apply font-medium;
-        @apply text-indigo-600;
-        @apply hover:text-indigo-500;
+        @apply text-blue-600;
+        @apply hover:text-blue-500;
     }
     .cartItemImage {
         @apply h-20;

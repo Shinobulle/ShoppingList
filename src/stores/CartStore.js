@@ -95,6 +95,12 @@ export const useCartStore = defineStore("CartStore", {
                 this.stockStore.addQuantity(item.item);
                 this.save();
             }
-        }
+        },
+        ItemsInCart(){
+            return this.items.length;
+        },
+        sort() {
+            return this.items.sort((a,b) => a.item.compare(b.item));
+        },
     }
 })

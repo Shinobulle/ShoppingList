@@ -18,7 +18,7 @@ cartStore.load();
         <span class="text-xl font-bold underline underline-offset-2">Produits</span>
     </div>
     <div class="flex flex-wrap justify-center mt-2">
-        <product-card :product="product.product" :quantity="product.quantity" @add:product="addProduct(product.product)" v-for="product in (stockStore.products).sort()" :key="product.id" />
+        <product-card :product="product.product" :quantity="product.quantity" @add:product="addProduct(product.product)" v-for="product in stockStore.sort()" :key="product.id" />
     </div>
 
 </template>
