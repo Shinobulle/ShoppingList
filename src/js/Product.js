@@ -1,8 +1,7 @@
 export default class Product {
-    constructor(label, price, quantity = 0, image = "default.png", id = null){
+    constructor(label, price, image = "default.png", id = null){
         this.label = label;
         this.price = price;
-        this.quantity = quantity;
         this.image = image;
         this.id = id;
     }
@@ -17,14 +16,6 @@ export default class Product {
 
     rename(label){
         this.label = label;
-    }
-
-    setQuantity(quantity){
-        this.quantity = quantity;
-    }
-
-    getQuantity() {
-        return this.quantity;
     }
 
     setPrice(price) {

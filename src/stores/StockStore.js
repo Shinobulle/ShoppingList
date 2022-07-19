@@ -8,27 +8,28 @@ export const useStockStore = defineStore("StockStore", {
         return {
             products: [],
             persistenceEngine: new StorageEngine(),
-            persistenceId: 'products'
+            persistenceId: 'products',
         }
     },
     actions:{
-        fill(){
+        fill() {
             const rawProducts = products
             rawProducts.forEach(rawProduct => {
-                this.create(rawProduct.label, rawProduct.price, rawProduct.quantity, rawProduct.image, rawProduct.id);
+                this.create(rawProduct.label, rawProduct.price, rawProduct.image, rawProduct.id);
             })
         },
-        create(label, price, quantity, image = "default.png", id = null) {
-            const product = new Product(label, price, quantity, image, id);
-            this.add(product);
+        create(label, price, image = "logo.png", id = null, quantity = null) {
+            const product = new Product(label, price, image, id);
+            this.add(product, quantity);
         },
-        add(product) {
+        add(product, quantityItem) {
             const nextId = this.products.length;
             product.setId(nextId);
-            this.products.push(product);
+            const quantity = this.setQuantity(quantityItem);
+            this.products.push({ product, quantity });
         },
         sort() {
-            return this.products.sort((a,b) => a.compare(b));
+            return this.products.sort((a,b) => a.product.compare(b.product));
         },
         save() {
             this.persistenceEngine.save(this.persistenceId, this.products);
@@ -38,27 +39,36 @@ export const useStockStore = defineStore("StockStore", {
             if (rawProducts == null) return this.fill();
             this.products = [];
             rawProducts.forEach(rawProduct => {
-                this.create(rawProduct.label, rawProduct.price, rawProduct.quantity, rawProduct.image, rawProduct.id);
+                this.create(rawProduct.product.label, rawProduct.product.price, rawProduct.product.image, rawProduct.product.id, rawProduct.quantity);
             });
         },
-        enoughQuantity(count, item) {
-            if(count <= item.getQuantity()) return true
+        setQuantity(quantity) {
+            if (quantity != null) return quantity;
+            return Math.floor(Math.random()*10);
+        },
+        enoughQuantity(item) {
+            const index = this.findIndexByProduct(item);
+            if(this.products[index].quantity > 0 ) return true
             return false
         },
-        removeQuantity(count, item) {
+        removeQuantity(item) {
             const index = this.findIndexByProduct(item);
-            const newQuantity = this.products[index].quantity - count;
-            this.products[index].setQuantity(newQuantity);
+            this.products[index].quantity -= 1;
             this.save();
         },
-        addQuantity(count, item){
+        addQuantity(item, nbProduct = 1) {
             const index = this.findIndexByProduct(item);
-            const newQuantity = this.products[index].quantity + count;
-            this.products[index].setQuantity(newQuantity);
+            this.products[index].quantity += nbProduct;
             this.save();
         },
-        findIndexByProduct(item){
-            return this.products.findIndex(product => product.label == item.label)
+        findIndexByProduct(item) {
+            let indexItem = null;
+            this.products.forEach((product, index) => {
+                if (product.product.id == item.id) {
+                    indexItem = index;
+                }
+            });
+            return indexItem;
         },
     }
 })

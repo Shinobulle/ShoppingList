@@ -14,12 +14,13 @@ cartStore.load();
         </button>
         <TheCart />
     </div>
-    <div class="m-auto mt-1 text-center">
+    <div class="m-auto mt-1 text-center p-3">
         <span class="text-xl font-bold underline underline-offset-2">Produits</span>
     </div>
     <div class="flex flex-wrap justify-center mt-2">
-        <product-card :product="product" @add:product="addProduct($event, product)" v-for="product in stockStore.products.sort()" :key="product.id" />
+        <product-card :product="product.product" :quantity="product.quantity" @add:product="addProduct(product.product)" v-for="product in (stockStore.products).sort()" :key="product.id" />
     </div>
+
 </template>
 
 
@@ -31,8 +32,9 @@ import Links from '@/data/links.json';
 
 export default {
     name: 'TheShoppingList',
-    components:{
+    components: {
         ProductCard,
+        TheCart,
     },
     data() {
         return {
@@ -41,12 +43,10 @@ export default {
         }
     },
     methods: {
-        addProduct(count, product) {
-            try{
-                const panier = this.cartStore.addItems(count, product);
-                this.error = '';
-                alert(panier);
-            }catch(e){
+        addProduct(product) {
+            try {
+                this.cartStore.addItems(product);
+            } catch(e) {
                 this.error = e.message;
                 alert(this.error);
             }

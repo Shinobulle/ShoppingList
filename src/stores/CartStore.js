@@ -27,20 +27,18 @@ export const useCartStore = defineStore("CartStore", {
         groupCount: (state) => (name) => state.grouped[name].length,
     },
     actions: {
-        addItems(count, item) {
-            count = parseInt(count);
-            if (count < 1 || isNaN(count)) throw new Error ("Vous devez choisir une quantité supérieur à 0 !");
-            if (!this.stockStore.enoughQuantity(count, item)) throw new Error("Il n'y a pas assez de stock !");
-            for(let index = 0; index < count; index++){
-                this.items.push({ ... item });
+        addItems(item) {
+            if (!this.stockStore.enoughQuantity(item)) throw new Error(100);
+            if(this.productInCart(item)) this.addQuantityToItem(item);
+            else {
+                const quantity = 1;
+                this.items.push({ item, quantity });
             }
-            this.stockStore.removeQuantity(count, item);
+            this.stockStore.removeQuantity(item);
             this.save();
-            return "Vous avez ajouter : "+item.label + " à votre panier.";
         },
         clearItem(item) {
-            const count = this.groupCount(item.label);
-            this.stockStore.addQuantity(count, item);
+            this.stockStore.addQuantity(item.item, item.quantity);
             this.items = this.filter(item);
             this.save();
         },
@@ -52,12 +50,51 @@ export const useCartStore = defineStore("CartStore", {
             if (rawProducts == null) return this.items;
             this.items = [];
             rawProducts.forEach(rawProduct => {
-                const item = new Product(rawProduct.label, rawProduct.price, rawProduct.quantity, rawProduct.image, rawProduct.id);
-                this.items.push(item);
+                const item = new Product(rawProduct.item.label, rawProduct.item.price, rawProduct.item.image, rawProduct.item.id);
+                const quantity = rawProduct.quantity;
+                this.items.push({ item, quantity });
             });
         },
         filter(item) {
-            return this.items.filter(product => product.label !== item.label);
+            return this.items.filter(product => product !== item);
+        },
+        productInCart(item) {
+            let present = false;
+            this.items.forEach(product => {
+                if (product.item.id == item.id) {
+                    present = true;
+                }
+            });
+            return present;
+        },
+        addQuantityToItem(item) {
+            const index = this.findIndex(item);
+            this.items[index].quantity += 1;
+        },
+        findIndex(item) {
+            let indexItem = null;
+            this.items.forEach((product, index) => {
+                if (product.item.id == item.id) {
+                    indexItem = index;
+                }
+            });
+            return indexItem;
+        },
+        price() {
+            let price = 0;
+            this.items.forEach(product => {
+                const priceItem = product.item.price * product.quantity;
+                price += priceItem;
+            });
+            return price;
+        },
+        removeItem(item){
+            if (item.quantity == 1) this.clearItem(item);
+            else {
+                item.quantity -= 1;
+                this.stockStore.addQuantity(item.item);
+                this.save();
+            }
         }
     }
 })

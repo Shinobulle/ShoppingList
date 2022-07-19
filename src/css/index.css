@@ -4,10 +4,10 @@
 
 @layer{
     body {
-        @apply bg-indigo-100;
+        @apply bg-gray-100;
     }
     .header {
-        @apply bg-gradient-to-r from-indigo-500;
+        @apply bg-white;
         @apply p-3;
         @apply flex;
         @apply flex-row;
@@ -21,15 +21,8 @@
 @layer components {
     .btnHeader {
         @apply bg-white;
-        @apply hover:bg-indigo-50;
-        @apply rounded-lg;
         @apply text-black;
-        @apply w-3/6;
-        @apply basis-1/12;
-        @apply border-2;
-        @apply border-gray-600;
-        @apply shadow-xl;
-        @apply font-mono;
+        @apply font-sans;
         @apply font-semibold;
     }
     .card {
@@ -39,20 +32,38 @@
         @apply w-1/6;
         @apply ml-10;
         @apply mb-3;
-        @apply bg-indigo-200;
-        @apply hover:bg-indigo-400;
+        @apply bg-white;
         @apply p-2;
-        @apply border-4;
-        @apply border-gray-600;
-        @apply hover:border-gray-500;
         @apply rounded-lg;
         @apply shadow-xl;
+        @apply font-sans;
     }
     .cardCategory {
-        @apply grid;
-        @apply grid-cols-2;
-        @apply text-center;
+        @apply flex;
+        @apply text-right;
         @apply mb-1;
+    }
+    .btnCardAjout {
+        @apply bg-blue-500;
+        @apply hover:bg-blue-600;
+        @apply text-white;
+        @apply p-2;
+        @apply m-auto;
+        @apply w-3/5;
+        @apply rounded-lg;
+        @apply font-semibold;
+        @apply shadow-xl;
+    }
+    .labelCategory {
+        @apply w-1/2;
+        @apply antialiased;
+        @apply flex-none;
+        @apply p-0.5;
+    }
+    .labelProduct {
+        @apply w-1/2;
+        @apply font-semibold;
+        @apply p-0.5;
     }
     .btnCart {
         @apply grid;
@@ -63,42 +74,6 @@
         @apply w-10;
         @apply place-content-center;
         @apply border-2;
-        @apply border-gray-600;
-    }
-    .btnCardAjout {
-        @apply bg-green-400;
-        @apply m-auto;
-        @apply w-2/5;
-        @apply rounded-lg;
-        @apply border-2;
-        @apply border-gray-600;
-        @apply hover:border-gray-400;
-        @apply font-mono;
-        @apply font-semibold;
-        @apply shadow-xl;
-    }
-    .labelCategory {
-        @apply col-span-1;
-        @apply font-mono;
-        @apply text-sm;
-        @apply antialiased;
-        @apply font-semibold;
-    }
-    .labelProduct {
-        @apply col-span-1;
-        @apply font-semibold;
-    }
-    .inputNBProduct{
-        @apply w-2/5;
-        @apply m-auto;
-        @apply border-2;
-        @apply border-gray-400;
-        @apply focus:border-gray-600;
-        @apply rounded-md;
-        @apply col-span-1;
-        @apply shadow-lg;
-        @apply shadow-inner;
-        @apply text-center
     }
     .cartItemInfo {
         @apply flex;
@@ -136,5 +111,12 @@
         @apply rounded-md;
         @apply border;
         @apply border-gray-200;
+    }
+    .cart-count {
+        @apply bg-red-500 rounded-xl w-5 h-5 text-center text-white absolute ml-5;
+        line-height: 1.8;
+        position: relative;
+        top: 10px;
+        font-size: 0.7rem;
     }
 }

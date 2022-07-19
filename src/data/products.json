@@ -3,35 +3,30 @@
         "id": 1,
         "label": "Ecran",
         "price": 100,
-        "quantity": 2,
         "image": "logo.png"
     },
     {
         "id": 2,
         "label": "Clavier d'ordinateur",
         "price": 58.99,
-        "quantity": 5,
         "image": "logo.png"
     },
     {
         "id": 3,
         "label": "Souris d'ordinateur",
         "price": 25.63,
-        "quantity": 3,
         "image": "logo.png"
     },
     {
         "id": 4,
         "label": "Ordinateur",
         "price": 319.7,
-        "quantity": 1,
         "image": "logo.png"
     },
     {
         "id": 5,
         "label": "Tapis de souris",
         "price": 10,
-        "quantity": 25,
         "image": "logo.png"
     }
 ]

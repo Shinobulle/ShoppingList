@@ -11,10 +11,11 @@ const open = ref(false);
 
 <template>
     <div class="btnCart">
-        <span class="cursor-pointer" @click="open = true">
+        <span @click="open = true">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
             </svg>
+            <div class="cart-count absolute">{{ cartStore.count }}</div>
         </span>
     </div>
     <TransitionRoot as="template" :show="open">
@@ -46,8 +47,11 @@ const open = ref(false);
                                     <li v-if="cartStore.count == 0">
                                     <span>Votre panier est vide</span>
                                     </li>
-                                    <li v-else v-for="product in cartStore.grouped" :key="product.id" class="flex py-6">
-                                        <CartItem :product="product[0]" :quantity="cartStore.groupCount(product[0].label)" @remove:product="cartStore.clearItem(product[0])" />
+                                    <li v-else v-for="product in cartStore.items" :key="product.id" class="flex py-6">
+                                        <CartItem :product="product.item" :quantity="product.quantity"
+                                        @remove:product="cartStore.clearItem(product)"
+                                        @add:Quantity="cartStore.addItems($event)"
+                                        @remove:Quantity="cartStore.removeItem(product)" />
                                     </li>
                                 </ul>
                             </div>
@@ -57,7 +61,7 @@ const open = ref(false);
                         <div class="border-t border-gray-200 py-6 px-4 sm:px-6">
                             <div class="cartItemInfo">
                             <p>Subtotal</p>
-                            <p>$ {{ cartStore.total }}</p>
+                            <p>$ {{ cartStore.price() }}</p>
                             </div>
                             <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                             <div class="mt-6">
@@ -82,5 +86,11 @@ const open = ref(false);
 
 
 <script>
-import CartItem from '../components/CartItem.vue'
+import CartItem from '../components/CartItem.vue';
+
+export default {
+    components: {
+        CartItem,
+    }
+}
 </script>
