@@ -27,7 +27,7 @@ cartStore.load();
 
 <script>
 import ProductCard from '@/components/ProductCard.vue';
-import TheCart from './TheCart.vue';
+import TheCart from '../components/TheCart.vue';
 import Links from '@/data/links.json';
 
 export default {

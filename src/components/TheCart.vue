@@ -86,7 +86,7 @@ const open = ref(false);
 
 
 <script>
-import CartItem from '../components/CartItem.vue';
+import CartItem from './CartItem.vue';
 
 export default {
     components: {
